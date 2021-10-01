@@ -11,6 +11,10 @@ Optional variables:
 * `key_name`
 * `sg_ports`
 
+Outputs:
+
+* `logstream_leader_ip` (for use with the logstream_worker module)
+
 Example usage:
 
 ```
