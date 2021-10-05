@@ -36,6 +36,11 @@ variable "config_volume_size" {
   default = 50
 }
 
+variable "config_volume_mountpoint" {
+  type = string
+  default = "/dev/xvdl"
+}
+
 variable "sg_ingress_ports" {
   type = map(object({description = string, protocol = string, cidr_blocks = list(string), ipv6_cidr_blocks = list(string)}))
   default = {

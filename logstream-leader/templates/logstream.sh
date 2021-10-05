@@ -4,8 +4,8 @@
 yum install -y git
 
 # Format /dev/xvdl as xfs file system for LogStream config volume
-mkfs -t xfs /dev/xvdl
-echo "UUID=$(blkid -s UUID -o value /dev/xvdl)  /opt/cribl  xfs defaults,nofail 0 2" >> /etc/fstab
+mkfs -t xfs ${config_volume_path}
+echo "UUID=$(blkid -s UUID -o value ${config_volume_path})  /opt/cribl  xfs defaults,nofail 0 2" >> /etc/fstab
 mkdir /opt/cribl
 mount -a
 

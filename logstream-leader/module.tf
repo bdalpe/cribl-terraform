@@ -70,7 +70,9 @@ resource "aws_instance" "leader" {
   instance_type = var.instance_type
   key_name      = var.key_name
   subnet_id     = var.subnet
-  user_data = var.user_data != null ? var.user_data : templatefile("${path.module}/templates/logstream.sh", {})
+  user_data = var.user_data != null ? var.user_data : templatefile("${path.module}/templates/logstream.sh", {
+    config_volume_path = var.config_volume_mountpoint
+  })
 
   metadata_options {
     http_endpoint = "enabled"
@@ -97,7 +99,7 @@ resource "aws_ebs_volume" "logstream_configs_volume" {
 }
 
 resource "aws_volume_attachment" "logstream_config_volume_attachement" {
-  device_name = "/dev/xvdl"
+  device_name = var.config_volume_mountpoint
   volume_id = aws_ebs_volume.logstream_configs_volume.id
   instance_id = aws_instance.leader.id
 }
