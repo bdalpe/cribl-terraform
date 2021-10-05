@@ -41,6 +41,26 @@ variable "config_volume_mountpoint" {
   default = "/dev/xvdl"
 }
 
+variable "root_block_size" {
+  type = number
+  default = 8
+
+  validation {
+    condition = var.root_block_size >= 8
+    error_message = "Root block device size must be greater than 8 GB."
+  }
+}
+
+variable "encrypt_block_devices" {
+  type = bool
+  default = true
+}
+
+variable "block_device_encryption_kms_key" {
+  type = string
+  default = null
+}
+
 variable "sg_ingress_ports" {
   type = map(object({description = string, protocol = string, cidr_blocks = list(string), ipv6_cidr_blocks = list(string)}))
   default = {

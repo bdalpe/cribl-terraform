@@ -74,6 +74,12 @@ resource "aws_instance" "leader" {
     config_volume_path = var.config_volume_mountpoint
   })
 
+  root_block_device {
+    encrypted = var.encrypt_block_devices
+    kms_key_id = var.block_device_encryption_kms_key
+    volume_size = var.root_block_size
+  }
+
   metadata_options {
     http_endpoint = "enabled"
     http_tokens = "required" #IMDSv2
@@ -96,6 +102,9 @@ resource "aws_instance" "leader" {
 resource "aws_ebs_volume" "logstream_configs_volume" {
   availability_zone = data.aws_subnet.subnet.availability_zone
   size = var.config_volume_size
+
+  encrypted = var.encrypt_block_devices
+  kms_key_id = var.block_device_encryption_kms_key
 }
 
 resource "aws_volume_attachment" "logstream_config_volume_attachement" {
