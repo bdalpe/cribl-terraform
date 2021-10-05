@@ -24,6 +24,10 @@ data "aws_ami" "amzn2_ami" {
   }
 }
 
+data "aws_subnet" "subnet" {
+  id = var.subnet
+}
+
 resource "aws_security_group" "leader" {
   name        = "cribl-logstream-leader-${random_string.random.result}"
   description = "Cribl LogStream Leader Security Group"
@@ -35,24 +39,29 @@ resource "aws_security_group" "leader" {
   }
 
   dynamic "ingress" {
-    for_each = var.sg_ports
+    for_each = var.sg_ingress_ports
 
     content {
       from_port        = ingress.key
       to_port          = ingress.key
-      protocol         = "tcp"
-      cidr_blocks      = ["0.0.0.0/0"]
-      ipv6_cidr_blocks = ["::/0"]
-      description      = ingress.value
+      protocol         = ingress.value.protocol
+      cidr_blocks      = ingress.value.cidr_blocks
+      ipv6_cidr_blocks = ingress.value.ipv6_cidr_blocks
+      description      = ingress.value.description
     }
   }
 
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
+  dynamic "egress" {
+    for_each = var.sg_egress_ports
+
+    content {
+      from_port        = egress.key
+      to_port          = egress.key
+      protocol         = egress.value.protocol
+      cidr_blocks      = egress.value.cidr_blocks
+      ipv6_cidr_blocks = egress.value.ipv6_cidr_blocks
+      description      = egress.value.description
+    }
   }
 }
 
@@ -61,6 +70,12 @@ resource "aws_instance" "leader" {
   instance_type = var.instance_type
   key_name      = var.key_name
   subnet_id     = var.subnet
+  user_data = var.user_data != null ? var.user_data : templatefile("${path.module}/templates/logstream.sh", {})
+
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens = "required" #IMDSv2
+  }
 
   vpc_security_group_ids = [
     aws_security_group.leader.id
@@ -71,6 +86,18 @@ resource "aws_instance" "leader" {
   }
 
   lifecycle {
-    ignore_changes = [tags]
+    ignore_changes = [tags, tags_all]
   }
+}
+
+# Store the $CRIBL_HOME directory on a separate volume
+resource "aws_ebs_volume" "logstream_configs_volume" {
+  availability_zone = data.aws_subnet.subnet.availability_zone
+  size = var.config_volume_size
+}
+
+resource "aws_volume_attachment" "logstream_config_volume_attachement" {
+  device_name = "/dev/xvdl"
+  volume_id = aws_ebs_volume.logstream_configs_volume.id
+  instance_id = aws_instance.leader.id
 }
