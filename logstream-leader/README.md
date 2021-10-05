@@ -19,7 +19,7 @@ Example usage:
 
 ```
 module "leader" {
-  source = "git::https://github.com/bdalpe/cribl-terraform.git//cribl-leader"
+  source = "git::https://github.com/bdalpe/cribl-terraform.git//logstream-leader"
   vpc = "vpc-abcdef1234567890"
   subnet = "subnet-abcdef1234567890"
 }
