@@ -24,10 +24,6 @@ data "aws_ami" "amzn2_ami" {
   }
 }
 
-data "aws_subnet" "subnet" {
-  id = var.subnet
-}
-
 resource "aws_security_group" "leader" {
   name        = "cribl-logstream-leader-${random_string.random.result}"
   description = "Cribl LogStream Leader Security Group"
@@ -100,7 +96,7 @@ resource "aws_instance" "leader" {
 
 # Store the $CRIBL_HOME directory on a separate volume
 resource "aws_ebs_volume" "logstream_configs_volume" {
-  availability_zone = data.aws_subnet.subnet.availability_zone
+  availability_zone = aws_instance.leader.availability_zone
   size = var.config_volume_size
 
   encrypted = var.encrypt_block_devices
