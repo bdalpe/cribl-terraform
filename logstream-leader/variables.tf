@@ -101,3 +101,22 @@ variable "user_data" {
   type = string
   default = null
 }
+
+variable "cribl_install_dir" {
+  type = string
+  default = "/opt/cribl"
+}
+
+variable "cribl_leader_config" {
+  type = map(string)
+  default = {
+    "CRIBL_LEADER_HOST": "0.0.0.0",
+    "CRIBL_LEADER_PORT": "4200",
+    "CRIBL_AUTH_TOKEN": "criblmaster"
+  }
+}
+
+variable "cribl_licenses" {
+  type = list(string)
+  default = null
+}
