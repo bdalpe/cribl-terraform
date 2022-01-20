@@ -14,4 +14,4 @@ module "eks_odic_provider" {
 ## Outputs
 
 * `oidc_identity_provider_arn` - The ARN of the created OIDC Identity Provider.
-* `issuer_no_http` - The EKS OIDC issuer attribute with the leading `https://` removed. Useful for IAM Roles.
+* `issuer` - The EKS OIDC issuer attribute (leading `https://` removed). Useful for IAM Roles.
