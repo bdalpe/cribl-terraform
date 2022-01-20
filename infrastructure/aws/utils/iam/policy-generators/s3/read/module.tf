@@ -21,6 +21,7 @@ output "policy" {
       {
         Action = [
           "s3:ListBucket",
+          "s3:GetBucketLocation"
         ]
         Effect   = "Allow"
         Resource = local.bucket_arn
