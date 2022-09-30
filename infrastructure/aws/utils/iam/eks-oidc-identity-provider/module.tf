@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 4.2"
     }
     tls = {
       source  = "hashicorp/tls"
@@ -27,5 +27,6 @@ resource "aws_iam_openid_connect_provider" "eks_oidc" {
 
   lifecycle {
     ignore_changes = [tags, tags_all]
+    prevent_destroy = true
   }
 }
