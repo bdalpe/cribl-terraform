@@ -1,7 +1,14 @@
-# Cribl LogStream Terraform
+# Cribl Terraform Module Library
 
-## LogStream Leader
-Provisions a LogStream Leader EC2 instance inside an AWS VPC.
+## Cribl Stream Deployments
 
-## LogStream AWS Fargate Worker Group
-Deploys an auto-scaling Fargate container worker group inside an AWS VPC.
+### AWS
+
+* [Stream Leader](./logstream-leader-aws-ec2)
+* [Stream AWS Fargate Worker Group](./logstream-wg-aws-fargate)
+
+## Infrastructure and Utility Modules
+
+### AWS 
+* [AWS EKS OIDC Identity Provider](./infrastructure/aws/utils/iam/eks-oidc-identity-provider)
+* [AWS EKS ALB Controller add-on](./infrastructure/aws/utils/eks/application-load-balancer-controller)
