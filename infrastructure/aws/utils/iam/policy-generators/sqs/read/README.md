@@ -22,10 +22,10 @@ module "iam_sqs_read_policy" {
 
 ## Inputs
 
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-|`sqs_queue_name`| string | Yes | Name of the SQS Queue |
-|`allow_create_queue`| bool | No | Allows LogStream to create a queue if it does not exist. |
+| Name | Type | Required | Description                                                 |
+| ---- | ---- | -------- |-------------------------------------------------------------|
+|`sqs_queue_name`| string | Yes | Name of the SQS Queue                                       |
+|`allow_create_queue`| bool | No | Allows Cribl Stream to create a queue if it does not exist. |
 
 ## Outputs
 
