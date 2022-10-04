@@ -2,7 +2,7 @@
 
 Installs the [AWS EKS Application Load Balancer Controller](https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html) add-on into the Kubernetes cluster including the appropriate IAM roles and permissions.
 
-This module assumes you've already provisioned an AWS IAM OIDC Identity Provider for you Kubernetes cluster. (you can provision one using [another module in this repository](../../iam/eks-oidc-identity-provider))
+This module assumes you've already provisioned an AWS IAM OIDC Identity Provider for your Kubernetes cluster. (you can provision one using [another module in this repository](../../iam/eks-oidc-identity-provider))
 
 ## Example
 
