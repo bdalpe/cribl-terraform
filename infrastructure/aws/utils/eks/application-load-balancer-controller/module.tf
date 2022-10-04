@@ -69,6 +69,8 @@ resource "aws_iam_policy" "EKSAWSLoadBalancerControllerIAMPolicy" {
   policy = data.aws_iam_policy_document.EKSAWSLoadBalancerControllerIAMPolicy.json
 }
 
+# https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/main/docs/install/iam_policy.json
+# TODO: GovCloud
 data "aws_iam_policy_document" "EKSAWSLoadBalancerControllerIAMPolicy" {
   statement {
     effect    = "Allow"
@@ -370,6 +372,7 @@ provider "helm" {
   }
 }
 
+# https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller
 resource "helm_release" "alb_controller_chart" {
   chart = "aws-load-balancer-controller"
   name  = "aws-load-balancer-controller"
