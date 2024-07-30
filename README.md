@@ -4,11 +4,10 @@
 
 ### AWS
 
-* [Stream Leader](./logstream-leader-aws-ec2)
-* [Stream AWS Fargate Worker Group](./logstream-wg-aws-fargate)
+* [Stream AWS ECS Worker Group Service Definition](./aws/ecs/service/stream/worker-group)
 
 ## Infrastructure and Utility Modules
 
 ### AWS 
-* [AWS EKS OIDC Identity Provider](./infrastructure/aws/utils/iam/eks-oidc-identity-provider)
-* [AWS EKS ALB Controller add-on](./infrastructure/aws/utils/eks/application-load-balancer-controller)
+* [AWS EKS OIDC Identity Provider](./aws/utils/iam/eks-oidc-identity-provider)
+* [AWS EKS ALB Controller add-on](./aws/utils/eks/application-load-balancer-controller)
